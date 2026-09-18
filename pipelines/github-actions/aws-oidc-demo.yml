@@ -12,7 +12,8 @@ permissions:
 jobs:
   prove-oidc:
     runs-on: ubuntu-latest
-    environment: production
+    environment: demo
+
     steps:
       - name: Configure AWS credentials via GitHub OIDC
         uses: aws-actions/configure-aws-credentials@v6.3.0
