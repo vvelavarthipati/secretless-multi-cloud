@@ -65,6 +65,22 @@ Expected output:
 
 ## AWS setup
 
+The AWS proof creates a dedicated private S3 bucket and an IAM role in the target AWS account. No AWS access key is stored in GitHub or in this repository.
+
+The GitHub Actions proof uses the \`demo\` environment. The AWS trust policy therefore authorizes the exact environment-based OIDC subject:
+
+\`repo:vvelavarthipati/secretless-multi-cloud:environment:demo\`
+
+Before running the workflow, configure these **GitHub Environment variables** under \`demo\`:
+
+- \`AWS_ROLE_ARN\` — Terraform \`role_arn\` output
+- \`AWS_REGION\` — for example \`us-east-1\`
+- \`DEMO_BUCKET\` — Terraform \`demo_bucket_name\` output
+
+The AWS account ID is an identifier only; it is not an authentication secret.
+
+
+
 Copy infra/aws/terraform.tfvars.example to infra/aws/terraform.tfvars, populate the repository/owner IDs and an existing S3 bucket ARN, then run Terraform.
 
 Configure the repository/environment variables required by pipelines/github-actions/aws-oidc-demo.yml before running the workflow.
