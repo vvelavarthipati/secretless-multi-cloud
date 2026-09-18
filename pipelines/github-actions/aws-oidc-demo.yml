@@ -1,0 +1,39 @@
+name: AWS OIDC proof
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  prove-oidc:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Configure AWS credentials via GitHub OIDC
+        uses: aws-actions/configure-aws-credentials@v6.3.0
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: github-${{ github.run_id }}
+          role-duration-seconds: 900
+
+      - name: Prove identity without a static AWS key
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -z "${AWS_ACCESS_KEY_ID+x}" || { echo "Static AWS access key detected"; exit 1; }
+          aws sts get-caller-identity
+
+      - name: Prove scoped resource access
+        shell: bash
+        env:
+          DEMO_BUCKET: ${{ vars.DEMO_BUCKET }}
+        run: |
+          set -euo pipefail
+          aws s3 ls "s3://${DEMO_BUCKET}" >/dev/null
+          echo "S3 access succeeded using federated credentials."
