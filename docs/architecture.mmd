@@ -1,0 +1,11 @@
+flowchart LR
+  W["CI/CD or MLOps workload"] --> O["OIDC issuer\nshort-lived JWT"]
+  O --> T{"Federation trust boundary"}
+  P["Claim policy\niss + aud + repo + ref/env"] -.-> T
+  T --> AWS["AWS IAM / STS"]
+  T --> GCP["Google Cloud WIF"]
+  T --> AZ["Microsoft Entra"]
+  AWS --> R["Cloud APIs / Data / Compute"]
+  GCP --> R
+  AZ --> R
+  T --> A["Audit + provenance"]
