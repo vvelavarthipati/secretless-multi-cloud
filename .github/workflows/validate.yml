@@ -1,0 +1,21 @@
+name: Validate reference implementation
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Validate Terraform formatting
+        run: terraform fmt -check -recursive infra/aws
+      - name: Validate JSON
+        run: python3 -m json.tool infra/aws/trust-policy.template.json
+      - name: Run deterministic model
+        run: python3 simulation/exposure_model.py
