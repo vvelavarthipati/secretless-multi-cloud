@@ -17,5 +17,7 @@ jobs:
         run: terraform fmt -check -recursive infra/aws
       - name: Validate JSON
         run: python3 -m json.tool infra/aws/trust-policy.template.json
+      - name: Validate reference implementation
+        run: python3 scripts/validate_reference.py
       - name: Run deterministic model
         run: python3 simulation/exposure_model.py
