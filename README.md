@@ -38,6 +38,16 @@ Implemented in the AWS proof:
 - Deterministic credential-validity-window model
 - Threat model and evidence plan
 
+## Verified reference results
+
+The deterministic validation workflow now passes on GitHub Actions. It validates Terraform formatting, the trust-policy JSON, the implemented OIDC constraints, the static-key guard, and the credential-validity-window model.
+
+Latest validation run: successful.
+
+The real AWS OIDC proof is intentionally manual because it requires an AWS account and GitHub `demo` environment variables. It checks `AWS_ROLE_ARN`, `AWS_REGION`, and `DEMO_BUCKET` before attempting federation. This keeps CI green without pretending that an AWS integration test ran when the environment is not configured.
+
+See [results/reference-results.md](results/reference-results.md) for the reproducible results record.
+
 ## Evidence roadmap
 
 | Claim | Evidence | Status |
