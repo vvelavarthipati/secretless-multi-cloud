@@ -1,7 +1,7 @@
-aws_region        = "us-east-1"
-github_repository = "vvelavarthipati/secretless-multi-cloud"
+aws_region         = "us-east-1"
+github_repository  = "vvelavarthipati/secretless-multi-cloud"
 github_environment = "demo"
-role_name        = "secretless-multicloud-github"
+role_name          = "secretless-multicloud-github"
 
 # No AWS access keys, GitHub tokens, bucket ARNs, or other credentials belong here.
 # The S3 bucket is created by Terraform.
