@@ -2,8 +2,6 @@ name: AWS OIDC proof
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
 
 permissions:
   id-token: write
@@ -15,6 +13,18 @@ jobs:
     environment: demo
 
     steps:
+      - name: Check demo configuration
+        shell: bash
+        env:
+          AWS_ROLE_ARN: ${{ vars.AWS_ROLE_ARN }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          DEMO_BUCKET: ${{ vars.DEMO_BUCKET }}
+        run: |
+          set -euo pipefail
+          test -n "$AWS_ROLE_ARN" || { echo "Missing demo variable: AWS_ROLE_ARN"; exit 1; }
+          test -n "$AWS_REGION" || { echo "Missing demo variable: AWS_REGION"; exit 1; }
+          test -n "$DEMO_BUCKET" || { echo "Missing demo variable: DEMO_BUCKET"; exit 1; }
+
       - name: Configure AWS credentials via GitHub OIDC
         uses: aws-actions/configure-aws-credentials@v6.3.0
         with:
