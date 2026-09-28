@@ -18,7 +18,7 @@ jobs:
         with:
           terraform_version: "1.9.8"
       - name: Validate Terraform formatting
-        run: terraform fmt -diff -recursive infra/aws
+        run: terraform fmt -check -recursive infra/aws
       - name: Validate JSON
         run: python3 -m json.tool infra/aws/trust-policy.template.json
       - name: Validate reference implementation
