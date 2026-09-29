@@ -1,5 +1,8 @@
-aws_region         = "us-east-1"
-github_repository  = "vvelavarthipati/secretless-multi-cloud"
+# Copy this file to terraform.tfvars and replace the values below
+# with your own GitHub repository and AWS region.
+
+aws_region         = "<AWS_REGION>"
+github_repository  = "<GITHUB_OWNER>/<GITHUB_REPOSITORY>"
 github_environment = "demo"
 role_name          = "secretless-multicloud-github"
 
