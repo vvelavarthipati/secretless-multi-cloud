@@ -4,6 +4,17 @@ Reference implementation and reproducible evidence package for the Conf42 DevSec
 
 > **Secretless Multi-Cloud Authentication with Workload Identity for DevSecOps Pipelines**
 
+Watch the talk: https://youtu.be/gEToeVQD1wI
+
+## Quickstart
+
+New here? The fastest path:
+
+1. Read [What this repository demonstrates](#what-this-repository-demonstrates) and the [architecture](#architecture) below.
+2. Follow [Clone and run with your own environment](#clone-and-run-with-your-own-environment) to deploy the AWS reference into your own account (about 15 minutes once the prerequisites are in place).
+3. Run the deterministic checks locally: `python3 scripts/validate_reference.py`
+4. Tried it — or got stuck? Open an issue or share feedback (see [Feedback and real-world use](#feedback-and-real-world-use)). Field reports from real environments are the most valuable contribution this project can receive.
+
 ## What this repository demonstrates
 
 This project demonstrates a DevSecOps authentication pattern in which a CI/CD workload uses an OIDC identity assertion and cloud workload-identity federation instead of a long-lived cloud access key.
@@ -189,7 +200,7 @@ The separate validation workflow:
 
 `.github/workflows/validate.yml`
 
-runs on pushes, pull requests, and manual dispatch.
+runs on pushes, pull requests, a monthly schedule, and manual dispatch.
 
 It validates:
 
@@ -359,6 +370,18 @@ secretless-multi-cloud/
 
 ---
 
+## Feedback and real-world use
+
+This project is maintained as a public reference so other teams can evaluate the pattern. The most helpful contributions are real-world ones:
+
+- **Ran it in your environment?** Open an issue at https://github.com/vvelavarthipati/secretless-multi-cloud/issues with your setup, what worked, and what failed. Negative results are welcome and are documented, not hidden.
+- **Evaluating it for your team?** A short structured feedback form is available: https://venkata-velavarthipati-feedback.netlify.app/
+- **Found a weakness in the trust model?** Read `SECURITY.md` and `docs/threat-model.md` first, and follow the security reporting guidance there for anything sensitive.
+
+External evaluations and field reports are recorded in the project evidence log as they occur; nothing is claimed in advance.
+
+---
+
 ## Sources
 
 - GitHub Actions OIDC for AWS: https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-aws
@@ -370,4 +393,4 @@ secretless-multi-cloud/
 
 ## License
 
-This repository is intended as a reference implementation and evidence package for the Secretless Multi-Cloud project.
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for the full text.
