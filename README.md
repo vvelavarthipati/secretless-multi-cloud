@@ -35,7 +35,7 @@ Implemented and validated in the AWS reference:
 - GitHub OIDC issuer restriction
 - STS audience restriction
 - Repository + GitHub environment subject restriction
-- 15-minute maximum AWS role session
+- 15-minute federated sessions (role maximum 60 minutes, the AWS minimum)
 - Least-privilege S3 read access
 - Static AWS credential fallback detection
 - Deterministic credential-validity-window model
@@ -126,7 +126,7 @@ Terraform creates the AWS-side resources required for the reference proof:
 
 - GitHub Actions OIDC provider
 - IAM role with repository + environment-scoped trust
-- 15-minute maximum role session
+- 15-minute federated sessions (role maximum 60 minutes, the AWS minimum)
 - Private S3 bucket
 - S3 public-access blocking
 - Server-side encryption
