@@ -68,7 +68,7 @@ resource "aws_s3_bucket_versioning" "demo" {
 
 resource "aws_iam_role" "github" {
   name                 = var.role_name
-  max_session_duration = 900
+  max_session_duration = 3600
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
