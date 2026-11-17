@@ -9,7 +9,7 @@ Generated from the repository's deterministic validation and credential-validity
 | GitHub OIDC issuer configured | PASS | Terraform IAM OIDC provider |
 | Audience restricted to STS | PASS | IAM trust condition |
 | Subject restricted to repository + environment | PASS | IAM trust condition |
-| Maximum AWS role session | PASS | 900 seconds |
+| Maximum AWS role session | PASS | 3600 seconds (AWS minimum); workflow requests 900-second sessions |
 | Static AWS key fallback detected | PASS | GitHub Actions guard |
 | STS identity proof present | PASS | `aws sts get-caller-identity` |
 | Scoped S3 access proof present | PASS | `aws s3 ls` against demo bucket |
