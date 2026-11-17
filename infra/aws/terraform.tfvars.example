@@ -6,5 +6,13 @@ github_repository  = "<GITHUB_OWNER>/<GITHUB_REPOSITORY>"
 github_environment = "demo"
 role_name          = "secretless-multicloud-github"
 
+# Immutable subject claims: if your repository was created, renamed, or
+# transferred after July 15, 2026, GitHub embeds numeric IDs in the OIDC
+# subject claim. Find both IDs on the repository's Settings > Actions > OIDC
+# page (the "Default subject claim prefix") and set them here. Leave them
+# unset for older repositories, which use the classic name-based subject.
+# github_owner_id      = "<GITHUB_OWNER_ID>"
+# github_repository_id = "<GITHUB_REPOSITORY_ID>"
+
 # No AWS access keys, GitHub tokens, bucket ARNs, or other credentials belong here.
 # The S3 bucket is created by Terraform.
