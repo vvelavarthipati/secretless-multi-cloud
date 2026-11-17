@@ -25,6 +25,14 @@ jobs:
           test -n "$AWS_REGION" || { echo "Missing demo variable: AWS_REGION"; exit 1; }
           test -n "$DEMO_BUCKET" || { echo "Missing demo variable: DEMO_BUCKET"; exit 1; }
 
+      - name: Reject static AWS credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -z "${AWS_ACCESS_KEY_ID+x}" || { echo "Static AWS access key detected"; exit 1; }
+          test -z "${AWS_SECRET_ACCESS_KEY+x}" || { echo "Static AWS secret key detected"; exit 1; }
+          echo "No static AWS credentials present; federation only."
+
       - name: Configure AWS credentials via GitHub OIDC
         uses: aws-actions/configure-aws-credentials@v6.3.0
         with:
@@ -33,11 +41,14 @@ jobs:
           role-session-name: github-${{ github.run_id }}
           role-duration-seconds: 900
 
-      - name: Prove identity without a static AWS key
+      - name: Prove identity with temporary federated credentials
         shell: bash
         run: |
           set -euo pipefail
-          test -z "${AWS_ACCESS_KEY_ID+x}" || { echo "Static AWS access key detected"; exit 1; }
+          case "${AWS_ACCESS_KEY_ID:-}" in
+            ASIA*) echo "Temporary session credentials confirmed (ASIA prefix)." ;;
+            *) echo "Expected temporary session credentials from federation"; exit 1 ;;
+          esac
           aws sts get-caller-identity
 
       - name: Prove scoped resource access
