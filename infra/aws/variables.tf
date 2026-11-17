@@ -19,3 +19,15 @@ variable "role_name" {
   description = "IAM role name for the GitHub OIDC demo."
   default     = "secretless-multicloud-github"
 }
+
+variable "github_owner_id" {
+  type        = string
+  description = "Numeric GitHub owner ID. Required when the repository uses immutable subject claims (repositories created, renamed, or transferred after July 15, 2026); leave empty for the classic name-based subject."
+  default     = ""
+}
+
+variable "github_repository_id" {
+  type        = string
+  description = "Numeric GitHub repository ID. See github_owner_id."
+  default     = ""
+}
