@@ -101,6 +101,8 @@ Replace:
 
 You may change `github_environment` or `role_name` if required.
 
+**Immutable subject claims:** repositories created, renamed, or transferred after July 15, 2026 receive OIDC subject claims that embed numeric IDs — `repo:<OWNER>@<OWNER_ID>/<REPO>@<REPO_ID>:environment:<ENV>` — instead of the classic name-based form. If that applies to your repository, set `github_owner_id` and `github_repository_id` in `terraform.tfvars` (both IDs are shown on the repository's Settings → Actions → OIDC page, in the "Default subject claim prefix"). The trust policy then matches the immutable subject exactly. Older repositories leave both unset.
+
 **Do not commit `terraform.tfvars`.**
 
 The repository's `.gitignore` excludes `*.tfvars` while keeping `terraform.tfvars.example` tracked.
