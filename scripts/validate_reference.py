@@ -25,6 +25,7 @@ def main() -> None:
     require(main_tf, r'Action\s*=\s*"sts:AssumeRoleWithWebIdentity"', "web identity federation")
     require(main_tf, r'"token\.actions\.githubusercontent\.com:aud"\s*=\s*"sts\.amazonaws\.com"', "audience restriction")
     require(main_tf, r'"token\.actions\.githubusercontent\.com:sub"\s*=\s*local\.github_subject', "subject restriction")
+    require(main_tf, r'repo:%s@%s/%s@%s:environment:%s', "immutable subject format for repositories with ID-based claims")
     require(main_tf, r'max_session_duration\s*=\s*3600', "role maximum session duration 3600 (AWS minimum)")
     require(main_tf, r'Action\s*=\s*\["s3:GetObject",\s*"s3:ListBucket"\]', "least-privilege S3 actions")
     require(workflow, r'permissions:\n\s+id-token:\s+write', "OIDC token permission")
@@ -36,7 +37,7 @@ def main() -> None:
     statement = trust["Statement"][0]
     conditions = statement["Condition"]["StringEquals"]
     assert conditions["token.actions.githubusercontent.com:aud"] == "sts.amazonaws.com"
-    assert conditions["token.actions.githubusercontent.com:sub"] == "repo:<OWNER>/<REPO>:environment:<ENVIRONMENT>"
+    assert conditions["token.actions.githubusercontent.com:sub"] == "repo:<OWNER>@<OWNER_ID>/<REPO>@<REPO_ID>:environment:<ENVIRONMENT>"
 
     print("PASS: issuer restricted to GitHub Actions OIDC")
     print("PASS: audience restricted to sts.amazonaws.com")
