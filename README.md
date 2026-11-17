@@ -232,7 +232,7 @@ The repository validates that the implementation contains:
 - Correct issuer
 - STS audience restriction
 - Repository + environment subject restriction
-- 900-second maximum session
+- Role maximum session duration of 3600 seconds (AWS minimum), with 900-second sessions requested by the workflow
 - Least-privilege S3 actions
 - Static-key fallback detection
 
@@ -284,7 +284,7 @@ The AWS trust policy restricts federation using:
 
 The resulting AWS role is limited to:
 
-- 900-second maximum sessions
+- 3600-second maximum session duration (AWS minimum); sessions are requested at 900 seconds
 - `s3:GetObject`
 - `s3:ListBucket`
 - The dedicated Terraform-created S3 bucket
