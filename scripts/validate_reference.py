@@ -31,6 +31,7 @@ def main() -> None:
     require(workflow, r'permissions:\n\s+id-token:\s+write', "OIDC token permission")
     require(workflow, r'role-duration-seconds:\s*900', "15-minute workflow session")
     require(workflow, r'test -z "\$\{AWS_ACCESS_KEY_ID\+x\}"', "static-key guard")
+    require(workflow, r'ASIA\*\)', "temporary session credential check")
     require(workflow, r'aws sts get-caller-identity', "identity proof")
     require(workflow, r'aws s3 ls "s3://\$\{DEMO_BUCKET\}"', "scoped S3 access proof")
 
