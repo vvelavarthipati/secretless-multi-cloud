@@ -22,11 +22,27 @@ resource "aws_iam_openid_connect_provider" "github" {
 locals {
   github_owner = split("/", var.github_repository)[0]
   github_repo  = split("/", var.github_repository)[1]
-  github_subject = format(
-    "repo:%s/%s:environment:%s",
-    local.github_owner,
-    local.github_repo,
-    var.github_environment
+  # GitHub repositories created, renamed, or transferred after July 15, 2026
+  # use immutable subject claims that embed the numeric owner and repository
+  # IDs (repo:<OWNER>@<OWNER_ID>/<REPO>@<REPO_ID>:environment:<ENV>). When
+  # both IDs are configured, trust that format; otherwise trust the classic
+  # name-based subject.
+  github_subject = (
+    var.github_owner_id != "" && var.github_repository_id != "" ?
+    format(
+      "repo:%s@%s/%s@%s:environment:%s",
+      local.github_owner,
+      var.github_owner_id,
+      local.github_repo,
+      var.github_repository_id,
+      var.github_environment
+    ) :
+    format(
+      "repo:%s/%s:environment:%s",
+      local.github_owner,
+      local.github_repo,
+      var.github_environment
+    )
   )
   demo_bucket_name = format(
     "secretless-multicloud-demo-%s-%s",
